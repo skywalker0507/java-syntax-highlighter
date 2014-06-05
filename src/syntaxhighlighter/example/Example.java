@@ -83,7 +83,6 @@ public class Example {
 
     SwingUtilities.invokeLater(new Runnable() {
 
-      @Override
       public void run() {
         // timer start
         long start, end;

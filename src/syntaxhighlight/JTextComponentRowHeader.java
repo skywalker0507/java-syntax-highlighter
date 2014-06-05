@@ -163,17 +163,14 @@ public class JTextComponentRowHeader extends JPanel {
     document = textComponent.getDocument();
     documentListener = new DocumentListener() {
 
-      @Override
       public void insertUpdate(DocumentEvent e) {
         handleEvent(e);
       }
 
-      @Override
       public void removeUpdate(DocumentEvent e) {
         handleEvent(e);
       }
 
-      @Override
       public void changedUpdate(DocumentEvent e) {
         handleEvent(e);
       }

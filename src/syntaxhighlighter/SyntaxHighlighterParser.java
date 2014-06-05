@@ -136,8 +136,8 @@ public class SyntaxHighlighterParser implements Parser {
     }
   }
 
-  @Override
-  public List<ParseResult> parse(String fileExtension, String content) {
+  
+  public List<ParseResult> parse(String fileExtension, String content){
     List<ParseResult> returnList = new ArrayList<ParseResult>();
 
     syntaxHighlighter.setHTMLScriptBrushList(htmlScriptBrushesList);

@@ -115,7 +115,6 @@ public class SyntaxHighlighterPane extends JTextPane {
       public ViewFactory getViewFactory() {
         return new ViewFactory() {
 
-          @Override
           public View create(Element elem) {
             String kind = elem.getName();
             if (kind != null) {
@@ -171,7 +170,6 @@ public class SyntaxHighlighterPane extends JTextPane {
 
     highlightPainter = new Highlighter.HighlightPainter() {
 
-      @Override
       public void paint(Graphics g, int p0, int p1, Shape bounds, JTextComponent c) {
         if (c.getParent() == null) {
           return;
@@ -241,11 +239,9 @@ public class SyntaxHighlighterPane extends JTextPane {
     });
     addMouseMotionListener(new MouseMotionListener() {
 
-      @Override
       public void mouseDragged(MouseEvent e) {
       }
 
-      @Override
       public void mouseMoved(MouseEvent e) {
         if (!highlightWhenMouseOver) {
           return;
