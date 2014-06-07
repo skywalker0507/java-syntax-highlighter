@@ -20,6 +20,18 @@ This repository is an import from https://code.google.com/p/java-syntax-highligh
 
 Besides using this library with GUI (see below), you can use only the parser without GUI. The class syntaxhighlighter.SyntaxHighlighterParser has implemented the Parser interface. You can initiate the class with brushes(programming language) specified and then invoke the Parser#parse(String, String) to parse the content. See also the ParseResult to know how to use the parsed results.
 
+
+```
+#!java
+    Parser aParser = new SyntaxHighlighterParser(new BrushJava());
+    List<ParseResult> aResultList = aParser.parse(null, aJavaString);
+    
+    for (ParseResult parseResult : aResultList) {
+       ...
+    }
+```
+
+
 For more details, you can have a look to syntaxhighlighter.parser.SyntaxHighlighter#parse(...). 
 
 
