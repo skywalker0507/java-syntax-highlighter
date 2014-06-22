@@ -82,7 +82,9 @@ public class SyntaxHighlighterTest {
     		while (!plainText.equals("")){
     			
     			if ( !plainText.contains("\n") ) {
-    				currentRow.addContent(plainText);
+    	    		Element plain = new Element("code").setAttribute("class", "plain");
+    				plain.addContent(plainText);
+    				currentRow.addContent(plain);
     				plainText = "";
     			} else if (plainText.startsWith("\n")){
         			lineNumber++;
