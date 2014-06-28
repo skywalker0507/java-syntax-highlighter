@@ -1,26 +1,15 @@
 package syntaxhighlighter;
 
-import java.util.List;
+import static org.junit.Assert.assertTrue;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.output.XMLOutputter;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import syntaxhighlight.ParseResult;
-import syntaxhighlight.Parser;
-import syntaxhighlight.SyntaxHighlighter;
-import syntaxhighlighter.brush.Brush;
 import syntaxhighlighter.brush.BrushJava;
-import syntaxhighlighter.theme.ThemeDefault;
-import static org.junit.Assert.*;
 
 /**
  * @author Chan Wai Shing <cws1989@gmail.com>
@@ -53,78 +42,26 @@ public class SyntaxHighlighterTest {
     assertTrue(true);
     
     String aJavaString = 
-    		"/* Some mulitline comment\n" + 
+    		"/* Some multiline comment\n" + 
     		" * which span over \n" +
     		" */\n" + 
+    		"   Some multi line code without any\n" +
+    		"   matching word or text\n" +
     		"String someString = \"An example comment: /* example */\";\n" +
 			"// The comment around this code has been commented out.\n" +
 			"// /*\n" +
 			"some_code(\"an example string\", true);\n" +
-			"// */\";\n";
+			"// */\";\n" +
+			"some text at \n" +
+			"the end";
     
     System.out.println(aJavaString);
     
-    Parser aParser = new SyntaxHighlighterParser(new BrushJava());
-    List<ParseResult> aResultList = aParser.parse(null, aJavaString);
-        
-    Element container = new Element("div").setAttribute("class", "container");
+    Element container = SyntaxHighlighterHtmlUtil.brush(aJavaString, new BrushJava());
+    Element output = SyntaxHighlighterHtmlUtil.addGutterAndTitle(container, "Hello.java", 5, false);
+    
+    System.out.println(SyntaxHighlighterHtmlUtil.outputString(output));
 
-    int lineNumber = 1;
-    Element currentRow = new Element("div").setAttribute("class", "line number" + lineNumber);
-    container.setText("\n   ").addContent(currentRow);
     
-    int currentIndex = 0;
-    for (ParseResult parseResult : aResultList) {
-    	if ( parseResult.getOffset() >= currentIndex){
-    		
-    		String plainText = aJavaString.substring(currentIndex, parseResult.getOffset());
-    		
-    		while (!plainText.equals("")){
-    			
-    			if ( !plainText.contains("\n") ) {
-    	    		Element plain = new Element("code").setAttribute("class", "plain");
-    				plain.addContent(plainText);
-    				currentRow.addContent(plain);
-    				plainText = "";
-    			} else if (plainText.startsWith("\n")){
-        			lineNumber++;
-        			currentRow = new Element("div").setAttribute("class", "line number" + lineNumber);
-        			container.addContent("\n   ").addContent(currentRow);
-        		    if ( plainText.equals("\n") ){
-        		    	plainText = "";
-        		    } else {
-						plainText = plainText.substring(1);
-					}
-    			} else {
-    				currentRow.addContent(plainText.substring(0, plainText.indexOf("\n")));
-    				plainText = plainText.substring(plainText.indexOf("\n"));
-    			}
-    		}
-    		
-    		
-    		
-//    		for (int i = 1; i < textLines.length; i++) {
-//    			currentRow.addContent("\n");
-//    			lineNumber++;
-//    			currentRow = new Element("div").setAttribute("class", "line number" + lineNumber);
-//    			currentRow.addContent(textLines[i]);
-//    		    container.addContent(currentRow);
-//    		}
-    		
-    		Element code = new Element("code").setAttribute("class", parseResult.getStyleKeysString());
-    		code.addContent(aJavaString.substring(parseResult.getOffset(), parseResult.getOffset() + parseResult.getLength()));
-    		currentRow.addContent(code);
-    		
-    		currentIndex = parseResult.getOffset() + parseResult.getLength();
-    	}
-	}
-    container.addContent("\n");
-    
-    XMLOutputter serializer = new XMLOutputter();
-    System.out.println(serializer.outputString(container));
-    
-//    for (ParseResult parseResult : aResultList) {
-//    	System.out.println(parseResult.getStyleKeysString() + "  " + parseResult.getOffset() + ", " + aJavaString.substring(parseResult.getOffset(), parseResult.getLength()+ parseResult.getOffset()));
-//	}
   }
 }
